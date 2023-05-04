@@ -54,7 +54,7 @@ namespace MFTimesheetSolution
                 using (FileStream fs = new FileStream(Environment.CurrentDirectory + "\\Jobs.xml", FileMode.Create, FileAccess.Write))
                 {
                     serial.Serialize(fs, job);
-                    MessageBox.Show("DBs have been Initialized.");
+                    MessageBox.Show("DB 'Jobs' has been Initialized.");
                 }
             }
 
@@ -66,6 +66,8 @@ namespace MFTimesheetSolution
             {
                 List<Timesheet> job = new List<Timesheet>();
                 XmlSerializer serial = new XmlSerializer(typeof(List<Timesheet>));
+                FileStream fs = new FileStream(Environment.CurrentDirectory + "\\Timesheets.xml", FileMode.Create, FileAccess.Write);
+                MessageBox.Show("DB 'Timesheets' has been Initialized.");
             }
         }
     }
