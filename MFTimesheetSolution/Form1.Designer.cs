@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.listView1 = new System.Windows.Forms.ListView();
             this.Next = new System.Windows.Forms.Button();
             this.Previous = new System.Windows.Forms.Button();
             this.Refresh = new System.Windows.Forms.Button();
@@ -38,16 +37,9 @@
             this.Employee = new System.Windows.Forms.Label();
             this.MFTimesheetSolution = new System.Windows.Forms.Label();
             this.InitializeDB = new System.Windows.Forms.Button();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
-            // 
-            // listView1
-            // 
-            this.listView1.HideSelection = false;
-            this.listView1.Location = new System.Drawing.Point(12, 215);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(1000, 371);
-            this.listView1.TabIndex = 1;
-            this.listView1.UseCompatibleStateImageBehavior = false;
             // 
             // Next
             // 
@@ -80,6 +72,8 @@
             // comboBox1
             // 
             this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "Developer"});
             this.comboBox1.Location = new System.Drawing.Point(12, 188);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(121, 21);
@@ -88,6 +82,8 @@
             // comboBox2
             // 
             this.comboBox2.FormattingEnabled = true;
+            this.comboBox2.Items.AddRange(new object[] {
+            "Bob"});
             this.comboBox2.Location = new System.Drawing.Point(139, 188);
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(121, 21);
@@ -131,11 +127,20 @@
             this.InitializeDB.UseVisualStyleBackColor = true;
             this.InitializeDB.Click += new System.EventHandler(this.InitializeDB_Click);
             // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(12, 215);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.Size = new System.Drawing.Size(1000, 371);
+            this.dataGridView1.TabIndex = 11;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1035, 627);
+            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.InitializeDB);
             this.Controls.Add(this.MFTimesheetSolution);
             this.Controls.Add(this.Employee);
@@ -145,16 +150,15 @@
             this.Controls.Add(this.Refresh);
             this.Controls.Add(this.Previous);
             this.Controls.Add(this.Next);
-            this.Controls.Add(this.listView1);
             this.Name = "Form1";
             this.Text = "Form1";
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.ListView listView1;
         private System.Windows.Forms.Button Next;
         private System.Windows.Forms.Button Previous;
         private System.Windows.Forms.Button Refresh;
@@ -164,6 +168,7 @@
         private System.Windows.Forms.Label Employee;
         private System.Windows.Forms.Label MFTimesheetSolution;
         private System.Windows.Forms.Button InitializeDB;
+        private System.Windows.Forms.DataGridView dataGridView1;
     }
 }
 
