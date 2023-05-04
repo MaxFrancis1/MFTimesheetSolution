@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.InitializeDB = new System.Windows.Forms.Button();
             this.listView1 = new System.Windows.Forms.ListView();
             this.Next = new System.Windows.Forms.Button();
             this.Previous = new System.Windows.Forms.Button();
@@ -38,17 +37,8 @@
             this.Job = new System.Windows.Forms.Label();
             this.Employee = new System.Windows.Forms.Label();
             this.MFTimesheetSolution = new System.Windows.Forms.Label();
+            this.InitializeDB = new System.Windows.Forms.Button();
             this.SuspendLayout();
-            // 
-            // InitializeDB
-            // 
-            this.InitializeDB.Location = new System.Drawing.Point(945, 12);
-            this.InitializeDB.Name = "InitializeDB";
-            this.InitializeDB.Size = new System.Drawing.Size(78, 23);
-            this.InitializeDB.TabIndex = 0;
-            this.InitializeDB.Text = "InitializeDB";
-            this.InitializeDB.UseVisualStyleBackColor = true;
-            this.InitializeDB.Click += new System.EventHandler(this.button1_Click);
             // 
             // listView1
             // 
@@ -85,6 +75,7 @@
             this.Refresh.TabIndex = 4;
             this.Refresh.Text = "Refresh";
             this.Refresh.UseVisualStyleBackColor = true;
+            this.Refresh.Click += new System.EventHandler(this.Refresh_Click);
             // 
             // comboBox1
             // 
@@ -130,11 +121,22 @@
             this.MFTimesheetSolution.TabIndex = 9;
             this.MFTimesheetSolution.Text = "MF-TimesheetSolution";
             // 
+            // InitializeDB
+            // 
+            this.InitializeDB.Location = new System.Drawing.Point(957, 12);
+            this.InitializeDB.Name = "InitializeDB";
+            this.InitializeDB.Size = new System.Drawing.Size(66, 23);
+            this.InitializeDB.TabIndex = 10;
+            this.InitializeDB.Text = "InitializeDB";
+            this.InitializeDB.UseVisualStyleBackColor = true;
+            this.InitializeDB.Click += new System.EventHandler(this.InitializeDB_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1035, 627);
+            this.Controls.Add(this.InitializeDB);
             this.Controls.Add(this.MFTimesheetSolution);
             this.Controls.Add(this.Employee);
             this.Controls.Add(this.Job);
@@ -144,7 +146,6 @@
             this.Controls.Add(this.Previous);
             this.Controls.Add(this.Next);
             this.Controls.Add(this.listView1);
-            this.Controls.Add(this.InitializeDB);
             this.Name = "Form1";
             this.Text = "Form1";
             this.ResumeLayout(false);
@@ -153,8 +154,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Button InitializeDB;
         private System.Windows.Forms.ListView listView1;
         private System.Windows.Forms.Button Next;
         private System.Windows.Forms.Button Previous;
@@ -164,6 +163,7 @@
         private System.Windows.Forms.Label Job;
         private System.Windows.Forms.Label Employee;
         private System.Windows.Forms.Label MFTimesheetSolution;
+        private System.Windows.Forms.Button InitializeDB;
     }
 }
 
