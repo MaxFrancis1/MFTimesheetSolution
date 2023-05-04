@@ -12,4 +12,8 @@ namespace MFTimesheetSolution
         public string Name { get; set; }
         public string JobDesc { get; set; }
     }
+    public class EmployeeDisplay
+    {
+        public string Name { get; set; }
+    }
 }

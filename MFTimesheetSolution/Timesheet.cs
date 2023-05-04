@@ -10,7 +10,7 @@ namespace MFTimesheetSolution
     {
         public string Employee { get; set; }
         public string JobDesc { get; set; }
-        public int WeekEnd { get; set; }
+        public string WeekEnd { get; set; }
         public double Mon { get; set; }
         public double Tue { get; set; }
         public double Wed { get; set; }
@@ -19,7 +19,7 @@ namespace MFTimesheetSolution
     }
     public class TimesheetDisplay
     {
-        public int WeekEnd { get; set; }
+        public string WeekEnd { get; set; }
         public double Mon { get; set; }
         public double Tue { get; set; }
         public double Wed { get; set; }

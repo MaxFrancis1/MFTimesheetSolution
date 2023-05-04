@@ -14,39 +14,20 @@ namespace MFTimesheetSolution
 {
     public partial class Form1 : Form
     {
+        private TimesheetService TimesheetService;
+
         public Form1()
         {
             InitializeComponent();
+            TimesheetService = new TimesheetService();
         }
 
         private void Refresh_Click(object sender, EventArgs e) //This is to apply the table to the listview
         {
-            List<TimesheetDisplay> display = new List<TimesheetDisplay>();
-            List<Timesheet> data = new List<Timesheet>();
             string combo1 = (string)comboBox1.SelectedItem;
             string combo2 = (string)comboBox2.SelectedItem;
 
-            XmlSerializer serial = new XmlSerializer(typeof(List<Timesheet>));
-            using (FileStream fs = new FileStream(Environment.CurrentDirectory + "\\Timesheets.xml", FileMode.Open, FileAccess.Read))
-            {
-                data = serial.Deserialize(fs) as List<Timesheet>;
-            }
-            foreach (var datadis in data)
-            {
-                if ((combo1 == datadis.JobDesc) && (combo2 == datadis.Employee))
-                {
-                    display.Add(new TimesheetDisplay()
-                    {
-                        WeekEnd = datadis.WeekEnd,
-                        Mon = datadis.Mon,
-                        Tue = datadis.Tue,
-                        Wed = datadis.Wed,
-                        Thu = datadis.Thu,
-                        Fri = datadis.Fri
-                    });
-                }
-            }
-            dataGridView1.DataSource = display;
+            dataGridView1.DataSource = TimesheetService.GetAllTimesheet(combo1, combo2);
         }
 
         private void InitializeDB_Click(object sender, EventArgs e) //initializing DBs with some data.
@@ -84,7 +65,7 @@ namespace MFTimesheetSolution
                 MessageBox.Show("DB 'Jobs' has already been Initialized.");
             }
 
-            if (File.Exists(Environment.CurrentDirectory + "\\Timesheet.xml"))
+            if (!File.Exists(Environment.CurrentDirectory + "\\Timesheet.xml"))
             {
                 List<Timesheet> timesheet = new List<Timesheet>();
                 XmlSerializer serial = new XmlSerializer(typeof(List<Timesheet>));
@@ -92,7 +73,7 @@ namespace MFTimesheetSolution
                 {
                     Employee = "Bob",
                     JobDesc = "Developer",
-                    WeekEnd = 20230505,
+                    WeekEnd = "20230505",
                     Mon = 7.5,
                     Tue = 7.5,
                     Thu = 7.5,
@@ -102,7 +83,7 @@ namespace MFTimesheetSolution
                 {
                     Employee = "John",
                     JobDesc = "Developer",
-                    WeekEnd = 20230505,
+                    WeekEnd = "20230505",
                     Mon = 4.5,
                     Tue = 5.5,
                     Wed = 7.5,
@@ -124,6 +105,63 @@ namespace MFTimesheetSolution
         private void Form1_Load(object sender, EventArgs e)
         {
 
+            List<Job> dataJob = new List<Job>();
+            List<Employee> dataEmp = new List<Employee>();
+
+            XmlSerializer serialJob = new XmlSerializer(typeof(List<Job>));
+            XmlSerializer serialEmp = new XmlSerializer(typeof(List<Employee>));
+
+            using (FileStream fs = new FileStream(Environment.CurrentDirectory + "\\Jobs.xml", FileMode.Open, FileAccess.Read))
+            {
+                dataJob = serialJob.Deserialize(fs) as List<Job>;
+            }
+            foreach (var datadis in dataJob)
+            {
+                comboBox1.Items.Add(datadis.JobDesc);
+            }
+            
+            using (FileStream fs = new FileStream(Environment.CurrentDirectory + "\\Employees.xml", FileMode.Open, FileAccess.Read))
+            {
+                dataEmp = serialEmp.Deserialize(fs) as List<Employee>;
+            }
+            foreach (var datadis in dataEmp)
+            {
+                comboBox2.Items.Add(datadis.Name);
+            }
+        }
+
+        private void Save_Click(object sender, EventArgs e)
+        {
+            string combo1 = comboBox1.SelectedItem.ToString();
+            string combo2 = comboBox2.SelectedItem.ToString();
+
+            foreach (DataGridViewRow data in dataGridView1.Rows)
+            {
+                string weekEnd = data.Cells[2].Value.ToString();
+                TimesheetService.UpdateTimesheet(
+                    combo1,
+                    combo2,
+                    weekEnd,
+                    (double)data.Cells[3].Value,
+                    (double)data.Cells[4].Value,
+                    (double)data.Cells[5].Value,
+                    (double)data.Cells[6].Value,
+                    (double)data.Cells[7].Value
+                    );
+            }
+        }
+
+        private void Create_Click(object sender, EventArgs e)
+        {
+            TimesheetService.CreateTimesheet((string)comboBox1.SelectedItem, (string)comboBox2.SelectedItem, dateTimePicker1.Value.ToString("yyyyMMdd"));
+        }
+
+        private void Delete_Click(object sender, EventArgs e)
+        {
+            string combo1 = (string)comboBox1.SelectedItem;
+            string combo2 = (string)comboBox2.SelectedItem;
+;
+            TimesheetService.DeleteTimesheet(TimesheetService.GetAllTimesheet(combo1, combo2)[dataGridView1.CurrentCell.RowIndex]);
         }
     }
 }
