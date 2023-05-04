@@ -21,25 +21,37 @@ namespace MFTimesheetSolution
 
         private void Refresh_Click(object sender, EventArgs e) //This is to apply the table to the listview
         {
-            List<Timesheet> Data = new List<Timesheet>();
+            List<TimesheetDisplay> display = new List<TimesheetDisplay>();
+            List<Timesheet> data = new List<Timesheet>();
+            string combo1 = (string)comboBox1.SelectedItem;
+            string combo2 = (string)comboBox2.SelectedItem;
+
             XmlSerializer serial = new XmlSerializer(typeof(List<Timesheet>));
             using (FileStream fs = new FileStream(Environment.CurrentDirectory + "\\Timesheets.xml", FileMode.Open, FileAccess.Read))
             {
-                Data = serial.Deserialize(fs) as List<Timesheet>;
+                data = serial.Deserialize(fs) as List<Timesheet>;
             }
-            foreach (var data in Data)
+            foreach (var datadis in data)
             {
-                MessageBox.Show("data {0} " + data.JobDesc);
+                if ((combo1 == datadis.JobDesc) && (combo2 == datadis.Employee))
+                {
+                    display.Add(new TimesheetDisplay()
+                    {
+                        WeekEnd = datadis.WeekEnd,
+                        Mon = datadis.Mon,
+                        Tue = datadis.Tue,
+                        Wed = datadis.Wed,
+                        Thu = datadis.Thu,
+                        Fri = datadis.Fri
+                    });
+                }
             }
+            dataGridView1.DataSource = display;
         }
 
         private void InitializeDB_Click(object sender, EventArgs e) //initializing DBs with some data.
         {
-            if(File.Exists(Environment.CurrentDirectory + "\\Employees.xml"))
-            {
-                MessageBox.Show("DB 'Employees' has already been Initialized.");
-            }
-            else
+            if (!File.Exists(Environment.CurrentDirectory + "\\Employees.xml"))
             {
                 List<Employee> employee = new List<Employee>();
                 XmlSerializer serial = new XmlSerializer(typeof(List<Employee>));
@@ -51,12 +63,12 @@ namespace MFTimesheetSolution
                     MessageBox.Show("DB 'Employees' has been Initialized.");
                 }
             }
-
-            if (File.Exists(Environment.CurrentDirectory + "\\Jobs.xml"))
-            {
-                MessageBox.Show("DB 'Jobs' has already been Initialized.");
+            else 
+            { 
+                MessageBox.Show("DB 'Employees' has already been Initialized."); 
             }
-            else
+
+            if (!File.Exists(Environment.CurrentDirectory + "\\Jobs.xml"))
             {
                 List<Job> job = new List<Job>();
                 XmlSerializer serial = new XmlSerializer(typeof(List<Job>));
@@ -67,20 +79,20 @@ namespace MFTimesheetSolution
                     MessageBox.Show("DB 'Jobs' has been Initialized.");
                 }
             }
+            else
+            {
+                MessageBox.Show("DB 'Jobs' has already been Initialized.");
+            }
 
             if (File.Exists(Environment.CurrentDirectory + "\\Timesheet.xml"))
-            {
-                MessageBox.Show("DB 'Timesheet' has already been Initialized.");
-            }
-            else
             {
                 List<Timesheet> timesheet = new List<Timesheet>();
                 XmlSerializer serial = new XmlSerializer(typeof(List<Timesheet>));
                 timesheet.Add(new Timesheet()
                 {
-                    EmployeeId = 1,
+                    Employee = "Bob",
                     JobDesc = "Developer",
-                    Date = 20230505,
+                    WeekEnd = 20230505,
                     Mon = 7.5,
                     Tue = 7.5,
                     Thu = 7.5,
@@ -88,9 +100,9 @@ namespace MFTimesheetSolution
                 }); //Just example data to begin with.
                 timesheet.Add(new Timesheet()
                 {
-                    EmployeeId = 2,
+                    Employee = "John",
                     JobDesc = "Developer",
-                    Date = 20230505,
+                    WeekEnd = 20230505,
                     Mon = 4.5,
                     Tue = 5.5,
                     Wed = 7.5,
@@ -103,6 +115,15 @@ namespace MFTimesheetSolution
                     MessageBox.Show("DB 'Timesheets' has been Initialized.");
                 }
             }
+            else
+            {
+                MessageBox.Show("DB 'Timesheet' has already been Initialized.");
+            }
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -83,7 +83,8 @@
             // 
             this.comboBox2.FormattingEnabled = true;
             this.comboBox2.Items.AddRange(new object[] {
-            "Bob"});
+            "Bob",
+            "John"});
             this.comboBox2.Location = new System.Drawing.Point(139, 188);
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(121, 21);
@@ -119,9 +120,9 @@
             // 
             // InitializeDB
             // 
-            this.InitializeDB.Location = new System.Drawing.Point(957, 12);
+            this.InitializeDB.Location = new System.Drawing.Point(946, 12);
             this.InitializeDB.Name = "InitializeDB";
-            this.InitializeDB.Size = new System.Drawing.Size(66, 23);
+            this.InitializeDB.Size = new System.Drawing.Size(77, 23);
             this.InitializeDB.TabIndex = 10;
             this.InitializeDB.Text = "InitializeDB";
             this.InitializeDB.UseVisualStyleBackColor = true;
@@ -152,6 +153,7 @@
             this.Controls.Add(this.Next);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
