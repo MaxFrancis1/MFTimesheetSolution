@@ -32,73 +32,53 @@ namespace MFTimesheetSolution
 
         private void InitializeDB_Click(object sender, EventArgs e) //initializing DBs with some data. (this is for debug)
         {
-            if (!File.Exists(Environment.CurrentDirectory + "\\Employees.xml"))
+            List<Employee> employee = new List<Employee>();
+            XmlSerializer emSerial = new XmlSerializer(typeof(List<Employee>));
+            employee.Add(new Employee() { Name = "Bob", JobDesc = "Developer" }); //Just example data to begin with.
+            employee.Add(new Employee() { Name = "John", JobDesc = "Developer" }); //Just example data to begin with.
+            using (FileStream fs = new FileStream(Environment.CurrentDirectory + "\\Employees.xml", FileMode.Create, FileAccess.Write))
             {
-                List<Employee> employee = new List<Employee>();
-                XmlSerializer serial = new XmlSerializer(typeof(List<Employee>));
-                employee.Add(new Employee() { Name = "Bob", JobDesc = "Developer" }); //Just example data to begin with.
-                employee.Add(new Employee() { Name = "John", JobDesc = "Developer" }); //Just example data to begin with.
-                using (FileStream fs = new FileStream(Environment.CurrentDirectory + "\\Employees.xml", FileMode.Create, FileAccess.Write))
-                {
-                    serial.Serialize(fs, employee);
-                    MessageBox.Show("DB 'Employees' has been Initialized.");
-                }
-            }
-            else 
-            { 
-                MessageBox.Show("DB 'Employees' has already been Initialized."); 
+                emSerial.Serialize(fs, employee);
+                MessageBox.Show("DB 'Employees' has been Initialized.");
             }
 
-            if (!File.Exists(Environment.CurrentDirectory + "\\Jobs.xml"))
-            {
-                List<Job> job = new List<Job>();
-                XmlSerializer serial = new XmlSerializer(typeof(List<Job>));
-                job.Add(new Job() { JobDesc = "Developer" }); //Just example data to begin with.
-                using (FileStream fs = new FileStream(Environment.CurrentDirectory + "\\Jobs.xml", FileMode.Create, FileAccess.Write))
-                {
-                    serial.Serialize(fs, job);
-                    MessageBox.Show("DB 'Jobs' has been Initialized.");
-                }
-            }
-            else
-            {
-                MessageBox.Show("DB 'Jobs' has already been Initialized.");
-            }
 
-            if (!File.Exists(Environment.CurrentDirectory + "\\Timesheet.xml"))
+            List<Job> job = new List<Job>();
+            XmlSerializer jbSerial = new XmlSerializer(typeof(List<Job>));
+            job.Add(new Job() { JobDesc = "Developer" }); //Just example data to begin with.
+            using (FileStream fs = new FileStream(Environment.CurrentDirectory + "\\Jobs.xml", FileMode.Create, FileAccess.Write))
             {
-                List<Timesheet> timesheet = new List<Timesheet>();
-                XmlSerializer serial = new XmlSerializer(typeof(List<Timesheet>));
-                timesheet.Add(new Timesheet()
-                {
-                    Employee = "Bob",
-                    JobDesc = "Developer",
-                    WeekEnd = "20230505",
-                    Mon = 7.5,
-                    Tue = 7.5,
-                    Thu = 7.5,
-                    Fri = 7.5
-                }); //Just example data to begin with.
-                timesheet.Add(new Timesheet()
-                {
-                    Employee = "John",
-                    JobDesc = "Developer",
-                    WeekEnd = "20230505",
-                    Mon = 4.5,
-                    Tue = 5.5,
-                    Wed = 7.5,
-                    Thu = 3,
-                    Fri = 1
-                }); //Just example data to begin with.
-                using (FileStream fs = new FileStream(Environment.CurrentDirectory + "\\Timesheets.xml", FileMode.Create, FileAccess.Write))
-                {
-                    serial.Serialize(fs, timesheet);
-                    MessageBox.Show("DB 'Timesheets' has been Initialized.");
-                }
+                jbSerial.Serialize(fs, job);
+                MessageBox.Show("DB 'Jobs' has been Initialized.");
             }
-            else
+            
+            List<Timesheet> timesheet = new List<Timesheet>();
+            XmlSerializer tsSerial = new XmlSerializer(typeof(List<Timesheet>));
+            timesheet.Add(new Timesheet()
             {
-                MessageBox.Show("DB 'Timesheet' has already been Initialized.");
+                Employee = "Bob",
+                JobDesc = "Developer",
+                WeekEnd = "20230505",
+                Mon = 7.5,
+                Tue = 7.5,
+                Thu = 7.5,
+                Fri = 7.5
+            }); //Just example data to begin with.
+            timesheet.Add(new Timesheet()
+            {
+                Employee = "John",
+                JobDesc = "Developer",
+                WeekEnd = "20230505",
+                Mon = 4.5,
+                Tue = 5.5,
+                Wed = 7.5,
+                Thu = 3,
+                Fri = 1
+            }); //Just example data to begin with.
+            using (FileStream fs = new FileStream(Environment.CurrentDirectory + "\\Timesheets.xml", FileMode.Create, FileAccess.Write))
+            {
+                tsSerial.Serialize(fs, timesheet);
+                MessageBox.Show("DB 'Timesheets' has been Initialized.");
             }
         }
 
