@@ -50,7 +50,13 @@ namespace MFTimesheetSolution
             _Repository.WriteXml(_Tsdata);
         }
 
-        public List<Timesheet> GetAllTimesheet(string jobDesc, string employee)
+        public List<Timesheet> GetAllTimesheet(string jobDesc)
+        {
+            List<Timesheet> displayData = _Tsdata.FindAll(e => e.JobDesc == jobDesc);
+            return displayData;
+        }
+
+        public List<Timesheet> GetEmpTimesheet(string jobDesc, string employee)
         {
             List<Timesheet> displayData = _Tsdata.FindAll(e => e.Employee == employee && e.JobDesc == jobDesc);
             return displayData;

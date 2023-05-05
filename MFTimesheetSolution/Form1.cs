@@ -28,10 +28,17 @@ namespace MFTimesheetSolution
 
         private void Refresh_Click(object sender, EventArgs e) //This is to apply the table to the listview
         {
-            string jobDesc = comboBox1.SelectedItem.ToString();
-            string employee = comboBox2.SelectedItem.ToString();
+            if ((comboBox1.SelectedItem != null) && (comboBox2.SelectedItem != null)) {
+                string jobDesc = comboBox1.SelectedItem.ToString();
+                string employee = comboBox2.SelectedItem.ToString();
 
-            dataGridView1.DataSource = TimesheetService.GetAllTimesheet(jobDesc, employee);
+                dataGridView1.DataSource = TimesheetService.GetEmpTimesheet(jobDesc, employee);
+            }
+            else if ((comboBox1.SelectedItem != null) && (comboBox2.SelectedItem == null))
+            {
+                string jobDesc = comboBox1.SelectedItem.ToString();
+                dataGridView1.DataSource = TimesheetService.GetAllTimesheet(jobDesc);
+            }
         }
 
         public void RefreshJobs()
@@ -136,7 +143,7 @@ namespace MFTimesheetSolution
             string jobDesc = comboBox1.SelectedItem.ToString();
             string employee = comboBox2.SelectedItem.ToString();
 ;
-            TimesheetService.DeleteTimesheet(TimesheetService.GetAllTimesheet(jobDesc, employee)[dataGridView1.CurrentCell.RowIndex]);
+            TimesheetService.DeleteTimesheet(TimesheetService.GetEmpTimesheet(jobDesc, employee)[dataGridView1.CurrentCell.RowIndex]);
         }
 
         private void CrEmployee_Click(object sender, EventArgs e)
