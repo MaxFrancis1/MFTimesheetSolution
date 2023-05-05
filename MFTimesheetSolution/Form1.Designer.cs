@@ -40,6 +40,8 @@
             this.Create = new System.Windows.Forms.Button();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.Delete = new System.Windows.Forms.Button();
+            this.CrJob = new System.Windows.Forms.Button();
+            this.CrEmployee = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -60,11 +62,12 @@
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(121, 21);
             this.comboBox1.TabIndex = 5;
+            this.comboBox1.Leave += new System.EventHandler(this.comboBox1_Leave);
             // 
             // comboBox2
             // 
             this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(139, 188);
+            this.comboBox2.Location = new System.Drawing.Point(263, 188);
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(121, 21);
             this.comboBox2.TabIndex = 6;
@@ -81,7 +84,7 @@
             // Employee
             // 
             this.Employee.AutoSize = true;
-            this.Employee.Location = new System.Drawing.Point(136, 169);
+            this.Employee.Location = new System.Drawing.Point(260, 169);
             this.Employee.Name = "Employee";
             this.Employee.Size = new System.Drawing.Size(53, 13);
             this.Employee.TabIndex = 8;
@@ -127,11 +130,11 @@
             // 
             // Create
             // 
-            this.Create.Location = new System.Drawing.Point(821, 185);
+            this.Create.Location = new System.Drawing.Point(787, 185);
             this.Create.Name = "Create";
-            this.Create.Size = new System.Drawing.Size(66, 20);
+            this.Create.Size = new System.Drawing.Size(100, 20);
             this.Create.TabIndex = 13;
-            this.Create.Text = "Create";
+            this.Create.Text = "Create Timesheet";
             this.Create.UseVisualStyleBackColor = true;
             this.Create.Click += new System.EventHandler(this.Create_Click);
             // 
@@ -153,11 +156,33 @@
             this.Delete.UseVisualStyleBackColor = true;
             this.Delete.Click += new System.EventHandler(this.Delete_Click);
             // 
+            // CrJob
+            // 
+            this.CrJob.Location = new System.Drawing.Point(139, 188);
+            this.CrJob.Name = "CrJob";
+            this.CrJob.Size = new System.Drawing.Size(98, 21);
+            this.CrJob.TabIndex = 16;
+            this.CrJob.Text = "Create Job";
+            this.CrJob.UseVisualStyleBackColor = true;
+            this.CrJob.Click += new System.EventHandler(this.CrJob_Click);
+            // 
+            // CrEmployee
+            // 
+            this.CrEmployee.Location = new System.Drawing.Point(390, 188);
+            this.CrEmployee.Name = "CrEmployee";
+            this.CrEmployee.Size = new System.Drawing.Size(98, 21);
+            this.CrEmployee.TabIndex = 17;
+            this.CrEmployee.Text = "Create Employee";
+            this.CrEmployee.UseVisualStyleBackColor = true;
+            this.CrEmployee.Click += new System.EventHandler(this.CrEmployee_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1035, 627);
+            this.Controls.Add(this.CrEmployee);
+            this.Controls.Add(this.CrJob);
             this.Controls.Add(this.Delete);
             this.Controls.Add(this.dateTimePicker1);
             this.Controls.Add(this.Create);
@@ -192,6 +217,8 @@
         private System.Windows.Forms.Button Create;
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
         private System.Windows.Forms.Button Delete;
+        private System.Windows.Forms.Button CrJob;
+        private System.Windows.Forms.Button CrEmployee;
     }
 }
 

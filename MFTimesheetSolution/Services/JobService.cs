@@ -45,10 +45,10 @@ namespace MFTimesheetSolution
             _Repository.WriteXml(_Jobdata);
         }*/
 
-        public List<Job> GetAllJob(string jobDesc, string employee)
+        public List<Job> GetAllJob()
         {
-            //List<Job> displayData = _Jobdata.FindAll(e => e.Employee == employee && e.JobDesc == jobDesc);
-            return null; //was displayData
+            List<Job> displayData = _Jobdata;
+            return displayData;
         }
     }
 }

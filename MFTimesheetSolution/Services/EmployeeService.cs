@@ -21,11 +21,12 @@ namespace MFTimesheetSolution
             _Emdata = _Repository.ReadXml();
         }
 
-        public void CreateEmployee(string newEmployee)
+        public void CreateEmployee(string newEmployee, string jobDesc)
         {
             Employee employee = new Employee()
             {
-                Name = newEmployee
+                Name = newEmployee,
+                JobDesc = jobDesc
             };
             _Emdata.Add(employee);
             _Repository.WriteXml(_Emdata);
@@ -49,10 +50,11 @@ namespace MFTimesheetSolution
             _Repository.WriteXml(_Emdata);
         }
 
-        public List<Employee> GetAllEmployee(string jobDesc, string employee)
+        public List<Employee> GetAllEmployee(string jobDesc)
         {
-            //List<Employee> displayData = _Emdata.FindAll(e => e.Employee == employee && e.JobDesc == jobDesc);
-            return null; //was displayData
+            //adding functionality that a jobdesc needs to be added before being able to select employee dropdown
+            List<Employee> displayData = _Emdata.FindAll(e => e.JobDesc == jobDesc);
+            return displayData;
         }
     }
 }

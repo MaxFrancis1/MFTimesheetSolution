@@ -15,19 +15,34 @@ namespace MFTimesheetSolution
     public partial class Form1 : Form
     {
         private TimesheetService TimesheetService;
+        private JobService JobService;
+        private EmployeeService EmployeeService;
 
         public Form1()
         {
             InitializeComponent();
             TimesheetService = new TimesheetService();
+            JobService = new JobService();
+            EmployeeService = new EmployeeService();
         }
 
         private void Refresh_Click(object sender, EventArgs e) //This is to apply the table to the listview
         {
-            string combo1 = (string)comboBox1.SelectedItem;
-            string combo2 = (string)comboBox2.SelectedItem;
+            string jobDesc = comboBox1.SelectedItem.ToString();
+            string employee = comboBox2.SelectedItem.ToString();
 
-            dataGridView1.DataSource = TimesheetService.GetAllTimesheet(combo1, combo2);
+            dataGridView1.DataSource = TimesheetService.GetAllTimesheet(jobDesc, employee);
+        }
+
+        public void RefreshJobs()
+        {
+            comboBox1.Items.Clear();
+            List<Job> dataJob = JobService.GetAllJob();
+
+            foreach (var datadis in dataJob)
+            {
+                comboBox1.Items.Add(datadis.JobDesc);
+            }
         }
 
         private void InitializeDB_Click(object sender, EventArgs e) //initializing DBs with some data. (this is for debug)
@@ -84,58 +99,20 @@ namespace MFTimesheetSolution
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
-            List<Job> dataJob = new List<Job>();
-            List<Employee> dataEmp = new List<Employee>();
-
-            XmlSerializer serialJob = new XmlSerializer(typeof(List<Job>));
-            XmlSerializer serialEmp = new XmlSerializer(typeof(List<Employee>));
-
-            using (FileStream fs = new FileStream(Environment.CurrentDirectory + "\\Jobs.xml", FileMode.OpenOrCreate, FileAccess.Read))
-            {
-                try
-                {
-                    dataJob = serialJob.Deserialize(fs) as List<Job>;
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex);
-                }
-
-            }
-            foreach (var datadis in dataJob)
-            {
-                comboBox1.Items.Add(datadis.JobDesc);
-            }
-            
-            using (FileStream fs = new FileStream(Environment.CurrentDirectory + "\\Employees.xml", FileMode.OpenOrCreate, FileAccess.Read))
-            {
-                try
-                {
-                    dataEmp = serialEmp.Deserialize(fs) as List<Employee>;
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex);
-                }
-            }
-            foreach (var datadis in dataEmp)
-            {
-                comboBox2.Items.Add(datadis.Name);
-            }
+            RefreshJobs();
         }
 
         private void Save_Click(object sender, EventArgs e)
         {
-            string combo1 = comboBox1.SelectedItem.ToString();
-            string combo2 = comboBox2.SelectedItem.ToString();
+            string jobDesc = comboBox1.SelectedItem.ToString();
+            string employee = comboBox2.SelectedItem.ToString();
 
             foreach (DataGridViewRow data in dataGridView1.Rows)
             {
                 string weekEnd = data.Cells[2].Value.ToString();
                 TimesheetService.UpdateTimesheet(
-                    combo1,
-                    combo2,
+                    jobDesc,
+                    employee,
                     weekEnd,
                     (double)data.Cells[3].Value,
                     (double)data.Cells[4].Value,
@@ -148,15 +125,54 @@ namespace MFTimesheetSolution
 
         private void Create_Click(object sender, EventArgs e)
         {
-            TimesheetService.CreateTimesheet((string)comboBox1.SelectedItem, (string)comboBox2.SelectedItem, dateTimePicker1.Value.ToString("yyyyMMdd"));
+            string jobDesc = comboBox1.SelectedItem.ToString();
+            string employee = comboBox2.SelectedItem.ToString();
+
+            TimesheetService.CreateTimesheet(jobDesc, employee, dateTimePicker1.Value.ToString("yyyyMMdd"));
         }
 
         private void Delete_Click(object sender, EventArgs e)
         {
-            string combo1 = (string)comboBox1.SelectedItem;
-            string combo2 = (string)comboBox2.SelectedItem;
+            string jobDesc = comboBox1.SelectedItem.ToString();
+            string employee = comboBox2.SelectedItem.ToString();
 ;
-            TimesheetService.DeleteTimesheet(TimesheetService.GetAllTimesheet(combo1, combo2)[dataGridView1.CurrentCell.RowIndex]);
+            TimesheetService.DeleteTimesheet(TimesheetService.GetAllTimesheet(jobDesc, employee)[dataGridView1.CurrentCell.RowIndex]);
+        }
+
+        private void CrEmployee_Click(object sender, EventArgs e)
+        {
+            string jobDesc = comboBox1.SelectedItem.ToString();
+            string employee = comboBox2.Text;
+
+            EmployeeService.CreateEmployee(employee, jobDesc);
+        }
+
+        private void CrJob_Click(object sender, EventArgs e)
+        {
+            string jobDesc = comboBox1.Text;
+
+            JobService.CreateJob(jobDesc);
+            RefreshJobs();
+        }
+
+        private void comboBox1_Leave(object sender, EventArgs e)
+        {
+            comboBox2.Items.Clear();
+            try
+            {
+                string jobDesc = comboBox1.Text;
+                List<Employee> dataEmp = EmployeeService.GetAllEmployee(jobDesc);
+
+                foreach (var datadis in dataEmp)
+                {
+                    comboBox2.Items.Add(datadis.Name);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
         }
     }
 }
