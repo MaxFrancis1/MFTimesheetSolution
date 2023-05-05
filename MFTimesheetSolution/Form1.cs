@@ -30,14 +30,14 @@ namespace MFTimesheetSolution
             dataGridView1.DataSource = TimesheetService.GetAllTimesheet(combo1, combo2);
         }
 
-        private void InitializeDB_Click(object sender, EventArgs e) //initializing DBs with some data.
+        private void InitializeDB_Click(object sender, EventArgs e) //initializing DBs with some data. (this is for debug)
         {
             if (!File.Exists(Environment.CurrentDirectory + "\\Employees.xml"))
             {
                 List<Employee> employee = new List<Employee>();
                 XmlSerializer serial = new XmlSerializer(typeof(List<Employee>));
-                employee.Add(new Employee() { Id = 1, Name = "Bob", JobDesc = "Developer" }); //Just example data to begin with.
-                employee.Add(new Employee() { Id = 2, Name = "John", JobDesc = "Developer" }); //Just example data to begin with.
+                employee.Add(new Employee() { Name = "Bob", JobDesc = "Developer" }); //Just example data to begin with.
+                employee.Add(new Employee() { Name = "John", JobDesc = "Developer" }); //Just example data to begin with.
                 using (FileStream fs = new FileStream(Environment.CurrentDirectory + "\\Employees.xml", FileMode.Create, FileAccess.Write))
                 {
                     serial.Serialize(fs, employee);
@@ -53,7 +53,7 @@ namespace MFTimesheetSolution
             {
                 List<Job> job = new List<Job>();
                 XmlSerializer serial = new XmlSerializer(typeof(List<Job>));
-                job.Add(new Job() { Id = 1, JobDesc = "Developer" }); //Just example data to begin with.
+                job.Add(new Job() { JobDesc = "Developer" }); //Just example data to begin with.
                 using (FileStream fs = new FileStream(Environment.CurrentDirectory + "\\Jobs.xml", FileMode.Create, FileAccess.Write))
                 {
                     serial.Serialize(fs, job);
@@ -111,18 +111,33 @@ namespace MFTimesheetSolution
             XmlSerializer serialJob = new XmlSerializer(typeof(List<Job>));
             XmlSerializer serialEmp = new XmlSerializer(typeof(List<Employee>));
 
-            using (FileStream fs = new FileStream(Environment.CurrentDirectory + "\\Jobs.xml", FileMode.Open, FileAccess.Read))
+            using (FileStream fs = new FileStream(Environment.CurrentDirectory + "\\Jobs.xml", FileMode.OpenOrCreate, FileAccess.Read))
             {
-                dataJob = serialJob.Deserialize(fs) as List<Job>;
+                try
+                {
+                    dataJob = serialJob.Deserialize(fs) as List<Job>;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                }
+
             }
             foreach (var datadis in dataJob)
             {
                 comboBox1.Items.Add(datadis.JobDesc);
             }
             
-            using (FileStream fs = new FileStream(Environment.CurrentDirectory + "\\Employees.xml", FileMode.Open, FileAccess.Read))
+            using (FileStream fs = new FileStream(Environment.CurrentDirectory + "\\Employees.xml", FileMode.OpenOrCreate, FileAccess.Read))
             {
-                dataEmp = serialEmp.Deserialize(fs) as List<Employee>;
+                try
+                {
+                    dataEmp = serialEmp.Deserialize(fs) as List<Employee>;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                }
             }
             foreach (var datadis in dataEmp)
             {

@@ -6,13 +6,9 @@ using System.Threading.Tasks;
 
 namespace MFTimesheetSolution
 {
-    public class Job
+    public class Employee
     {
-        public int Id { get; set; }
-        public string JobDesc { get; set; }
-    }
-    public class JobDisplay
-    {
+        public string Name { get; set; }
         public string JobDesc { get; set; }
     }
 }

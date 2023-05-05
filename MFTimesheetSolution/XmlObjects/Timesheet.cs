@@ -17,13 +17,4 @@ namespace MFTimesheetSolution
         public double Thu { get; set; }
         public double Fri { get; set; }
     }
-    public class TimesheetDisplay
-    {
-        public string WeekEnd { get; set; }
-        public double Mon { get; set; }
-        public double Tue { get; set; }
-        public double Wed { get; set; }
-        public double Thu { get; set; }
-        public double Fri { get; set; }
-    }
 }
