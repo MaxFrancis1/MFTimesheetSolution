@@ -28,13 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.Refresh = new System.Windows.Forms.Button();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.Job = new System.Windows.Forms.Label();
             this.Employee = new System.Windows.Forms.Label();
             this.MFTimesheetSolution = new System.Windows.Forms.Label();
-            this.InitializeDB = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.Save = new System.Windows.Forms.Button();
             this.Create = new System.Windows.Forms.Button();
@@ -42,6 +42,9 @@
             this.Delete = new System.Windows.Forms.Button();
             this.CrJob = new System.Windows.Forms.Button();
             this.CrEmployee = new System.Windows.Forms.Button();
+            this.Print = new System.Windows.Forms.Button();
+            this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
+            this.printDocument1 = new System.Drawing.Printing.PrintDocument();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -99,16 +102,6 @@
             this.MFTimesheetSolution.Size = new System.Drawing.Size(287, 31);
             this.MFTimesheetSolution.TabIndex = 9;
             this.MFTimesheetSolution.Text = "MF-TimesheetSolution";
-            // 
-            // InitializeDB
-            // 
-            this.InitializeDB.Location = new System.Drawing.Point(946, 12);
-            this.InitializeDB.Name = "InitializeDB";
-            this.InitializeDB.Size = new System.Drawing.Size(77, 23);
-            this.InitializeDB.TabIndex = 10;
-            this.InitializeDB.Text = "InitializeDB";
-            this.InitializeDB.UseVisualStyleBackColor = true;
-            this.InitializeDB.Click += new System.EventHandler(this.InitializeDB_Click);
             // 
             // dataGridView1
             // 
@@ -176,18 +169,43 @@
             this.CrEmployee.UseVisualStyleBackColor = true;
             this.CrEmployee.Click += new System.EventHandler(this.CrEmployee_Click);
             // 
+            // Print
+            // 
+            this.Print.Location = new System.Drawing.Point(156, 592);
+            this.Print.Name = "Print";
+            this.Print.Size = new System.Drawing.Size(81, 23);
+            this.Print.TabIndex = 18;
+            this.Print.Text = "Print Report";
+            this.Print.UseVisualStyleBackColor = true;
+            this.Print.Click += new System.EventHandler(this.Print_Click);
+            // 
+            // printPreviewDialog1
+            // 
+            this.printPreviewDialog1.AutoScrollMargin = new System.Drawing.Size(0, 0);
+            this.printPreviewDialog1.AutoScrollMinSize = new System.Drawing.Size(0, 0);
+            this.printPreviewDialog1.ClientSize = new System.Drawing.Size(400, 300);
+            this.printPreviewDialog1.Document = this.printDocument1;
+            this.printPreviewDialog1.Enabled = true;
+            this.printPreviewDialog1.Icon = ((System.Drawing.Icon)(resources.GetObject("printPreviewDialog1.Icon")));
+            this.printPreviewDialog1.Name = "printPreviewDialog1";
+            this.printPreviewDialog1.Visible = false;
+            // 
+            // printDocument1
+            // 
+            this.printDocument1.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(this.printDocument1_PrintPage);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1035, 627);
+            this.Controls.Add(this.Print);
             this.Controls.Add(this.CrEmployee);
             this.Controls.Add(this.CrJob);
             this.Controls.Add(this.Delete);
             this.Controls.Add(this.dateTimePicker1);
             this.Controls.Add(this.Create);
             this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.InitializeDB);
             this.Controls.Add(this.MFTimesheetSolution);
             this.Controls.Add(this.Employee);
             this.Controls.Add(this.Job);
@@ -211,7 +229,6 @@
         private System.Windows.Forms.Label Job;
         private System.Windows.Forms.Label Employee;
         private System.Windows.Forms.Label MFTimesheetSolution;
-        private System.Windows.Forms.Button InitializeDB;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button Save;
         private System.Windows.Forms.Button Create;
@@ -219,6 +236,9 @@
         private System.Windows.Forms.Button Delete;
         private System.Windows.Forms.Button CrJob;
         private System.Windows.Forms.Button CrEmployee;
+        private System.Windows.Forms.Button Print;
+        private System.Windows.Forms.PrintPreviewDialog printPreviewDialog1;
+        private System.Drawing.Printing.PrintDocument printDocument1;
     }
 }
 

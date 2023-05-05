@@ -18,6 +18,8 @@ namespace MFTimesheetSolution
         private JobService JobService;
         private EmployeeService EmployeeService;
 
+        private Bitmap bitmap;
+
         public Form1()
         {
             InitializeComponent();
@@ -52,58 +54,6 @@ namespace MFTimesheetSolution
             }
         }
 
-        private void InitializeDB_Click(object sender, EventArgs e) //initializing DBs with some data. (this is for debug)
-        {
-            List<Employee> employee = new List<Employee>();
-            XmlSerializer emSerial = new XmlSerializer(typeof(List<Employee>));
-            employee.Add(new Employee() { Name = "Bob", JobDesc = "Developer" }); //Just example data to begin with.
-            employee.Add(new Employee() { Name = "John", JobDesc = "Developer" }); //Just example data to begin with.
-            using (FileStream fs = new FileStream(Environment.CurrentDirectory + "\\Employees.xml", FileMode.Create, FileAccess.Write))
-            {
-                emSerial.Serialize(fs, employee);
-                MessageBox.Show("DB 'Employees' has been Initialized.");
-            }
-
-
-            List<Job> job = new List<Job>();
-            XmlSerializer jbSerial = new XmlSerializer(typeof(List<Job>));
-            job.Add(new Job() { JobDesc = "Developer" }); //Just example data to begin with.
-            using (FileStream fs = new FileStream(Environment.CurrentDirectory + "\\Jobs.xml", FileMode.Create, FileAccess.Write))
-            {
-                jbSerial.Serialize(fs, job);
-                MessageBox.Show("DB 'Jobs' has been Initialized.");
-            }
-            
-            List<Timesheet> timesheet = new List<Timesheet>();
-            XmlSerializer tsSerial = new XmlSerializer(typeof(List<Timesheet>));
-            timesheet.Add(new Timesheet()
-            {
-                Employee = "Bob",
-                JobDesc = "Developer",
-                WeekEnd = "20230505",
-                Mon = 7.5,
-                Tue = 7.5,
-                Thu = 7.5,
-                Fri = 7.5
-            }); //Just example data to begin with.
-            timesheet.Add(new Timesheet()
-            {
-                Employee = "John",
-                JobDesc = "Developer",
-                WeekEnd = "20230505",
-                Mon = 4.5,
-                Tue = 5.5,
-                Wed = 7.5,
-                Thu = 3,
-                Fri = 1
-            }); //Just example data to begin with.
-            using (FileStream fs = new FileStream(Environment.CurrentDirectory + "\\Timesheets.xml", FileMode.Create, FileAccess.Write))
-            {
-                tsSerial.Serialize(fs, timesheet);
-                MessageBox.Show("DB 'Timesheets' has been Initialized.");
-            }
-        }
-
         private void Form1_Load(object sender, EventArgs e)
         {
             RefreshJobs();
@@ -111,15 +61,17 @@ namespace MFTimesheetSolution
 
         private void Save_Click(object sender, EventArgs e)
         {
+            if (comboBox1.SelectedItem == null) return;
+
             string jobDesc = comboBox1.SelectedItem.ToString();
-            string employee = comboBox2.SelectedItem.ToString();
+            string employee = comboBox2.Text;
 
             foreach (DataGridViewRow data in dataGridView1.Rows)
             {
                 string weekEnd = data.Cells[2].Value.ToString();
                 TimesheetService.UpdateTimesheet(
+                    employee == "" ? (string)data.Cells[0].Value : employee,
                     jobDesc,
-                    employee,
                     weekEnd,
                     (double)data.Cells[3].Value,
                     (double)data.Cells[4].Value,
@@ -132,6 +84,11 @@ namespace MFTimesheetSolution
 
         private void Create_Click(object sender, EventArgs e)
         {
+            if ((comboBox1.SelectedItem == null) || (comboBox2.SelectedItem == null))
+            {
+                MessageBox.Show("Please select a Job and Employee");
+                return;
+            }
             string jobDesc = comboBox1.SelectedItem.ToString();
             string employee = comboBox2.SelectedItem.ToString();
 
@@ -140,6 +97,11 @@ namespace MFTimesheetSolution
 
         private void Delete_Click(object sender, EventArgs e)
         {
+            if ((comboBox1.SelectedItem == null) || (comboBox2.SelectedItem == null))
+            {
+                MessageBox.Show("Please select a Job and Employee");
+                return;
+            }
             string jobDesc = comboBox1.SelectedItem.ToString();
             string employee = comboBox2.SelectedItem.ToString();
 ;
@@ -148,6 +110,11 @@ namespace MFTimesheetSolution
 
         private void CrEmployee_Click(object sender, EventArgs e)
         {
+            if ((comboBox1.SelectedItem == null) || (comboBox2.Text == ""))
+            {
+                MessageBox.Show("Please select a Job with a name");
+                return;
+            };
             string jobDesc = comboBox1.SelectedItem.ToString();
             string employee = comboBox2.Text;
 
@@ -156,6 +123,11 @@ namespace MFTimesheetSolution
 
         private void CrJob_Click(object sender, EventArgs e)
         {
+            if (comboBox1.Text == "")
+            {
+                MessageBox.Show("Please select a enter a name for this Job");
+                return;
+            };
             string jobDesc = comboBox1.Text;
 
             JobService.CreateJob(jobDesc);
@@ -180,6 +152,21 @@ namespace MFTimesheetSolution
             {
                 Console.WriteLine(ex);
             }
+        }
+
+        private void Print_Click(object sender, EventArgs e)
+        {
+            int height = dataGridView1.Height;
+            dataGridView1.Height = dataGridView1.RowCount * dataGridView1.RowTemplate.Height * 2;
+            bitmap = new Bitmap(dataGridView1.Width, dataGridView1.Height);
+            dataGridView1.DrawToBitmap(bitmap, new Rectangle(0, 0, dataGridView1.Width, dataGridView1.Height));
+            dataGridView1.Height = height;
+            printPreviewDialog1.ShowDialog();
+        }
+
+        private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
+        {
+            e.Graphics.DrawImage(bitmap, 0, 0);
         }
     }
 }

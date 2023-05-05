@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -33,7 +35,31 @@ namespace MFTimesheetSolution
             _Repository.WriteXml(_Tsdata);
         }
 
-        public void UpdateTimesheet(string jobDesc, string employee, string weekEnd, double mon, double tue, double wed, double thu, double fri)
+        public void CalcOvertime(List<Timesheet> timesheet)
+        {
+            foreach (Timesheet data in timesheet) 
+            {
+                if ((data.Mon >= 10) || (data.Tue >= 10) || (data.Wed >= 10) || (data.Thu >= 10) || (data.Fri >= 10))
+                {
+                    string subject = $"Overtime alert - {data.Employee}";
+                    string body = $"{data.Employee} has gone over allocated hours for job {data.JobDesc}";
+
+                    /*
+                    using (SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587))
+                    {
+                        smtpClient.EnableSsl = true;
+                        smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
+                        smtpClient.UseDefaultCredentials = false;
+                        smtpClient.Credentials = new NetworkCredential("TimesheetSolutions@gmail.com", "examplePassword");
+
+                        smtpClient.Send("smtp@example.com", "whoever@example.com", subject, body);
+                    }*/ //The above is how I would implement a email notification however I don't have a smtp server available.
+                    MessageBox.Show($"{subject} - {body}");
+                }
+            }
+        }
+
+        public void UpdateTimesheet(string employee, string jobDesc, string weekEnd, double mon, double tue, double wed, double thu, double fri)
         {
             Timesheet timesheet = _Tsdata.Find(e => e.Employee == employee && e.JobDesc == jobDesc && e.WeekEnd == weekEnd);
             timesheet.Mon = mon;
@@ -53,12 +79,14 @@ namespace MFTimesheetSolution
         public List<Timesheet> GetAllTimesheet(string jobDesc)
         {
             List<Timesheet> displayData = _Tsdata.FindAll(e => e.JobDesc == jobDesc);
+            CalcOvertime(displayData);
             return displayData;
         }
 
         public List<Timesheet> GetEmpTimesheet(string jobDesc, string employee)
         {
             List<Timesheet> displayData = _Tsdata.FindAll(e => e.Employee == employee && e.JobDesc == jobDesc);
+            CalcOvertime(displayData);
             return displayData;
         }
     }
