@@ -9,5 +9,6 @@ namespace MFTimesheetSolution
     public class Job
     {
         public string JobDesc { get; set; }
+        public double JobHours { get; set; }
     }
 }

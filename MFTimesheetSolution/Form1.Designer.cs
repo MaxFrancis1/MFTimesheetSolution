@@ -45,7 +45,11 @@
             this.Print = new System.Windows.Forms.Button();
             this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
+            this.CalcHours = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.JobhoursUpDown = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.JobhoursUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // Refresh
@@ -70,7 +74,7 @@
             // comboBox2
             // 
             this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(263, 188);
+            this.comboBox2.Location = new System.Drawing.Point(323, 188);
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(121, 21);
             this.comboBox2.TabIndex = 6;
@@ -87,7 +91,7 @@
             // Employee
             // 
             this.Employee.AutoSize = true;
-            this.Employee.Location = new System.Drawing.Point(260, 169);
+            this.Employee.Location = new System.Drawing.Point(320, 169);
             this.Employee.Name = "Employee";
             this.Employee.Size = new System.Drawing.Size(53, 13);
             this.Employee.TabIndex = 8;
@@ -151,7 +155,7 @@
             // 
             // CrJob
             // 
-            this.CrJob.Location = new System.Drawing.Point(139, 188);
+            this.CrJob.Location = new System.Drawing.Point(202, 188);
             this.CrJob.Name = "CrJob";
             this.CrJob.Size = new System.Drawing.Size(98, 21);
             this.CrJob.TabIndex = 16;
@@ -161,7 +165,7 @@
             // 
             // CrEmployee
             // 
-            this.CrEmployee.Location = new System.Drawing.Point(390, 188);
+            this.CrEmployee.Location = new System.Drawing.Point(450, 188);
             this.CrEmployee.Name = "CrEmployee";
             this.CrEmployee.Size = new System.Drawing.Size(98, 21);
             this.CrEmployee.TabIndex = 17;
@@ -171,7 +175,7 @@
             // 
             // Print
             // 
-            this.Print.Location = new System.Drawing.Point(156, 592);
+            this.Print.Location = new System.Drawing.Point(306, 592);
             this.Print.Name = "Print";
             this.Print.Size = new System.Drawing.Size(81, 23);
             this.Print.TabIndex = 18;
@@ -194,11 +198,40 @@
             // 
             this.printDocument1.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(this.printDocument1_PrintPage);
             // 
+            // CalcHours
+            // 
+            this.CalcHours.Location = new System.Drawing.Point(156, 592);
+            this.CalcHours.Name = "CalcHours";
+            this.CalcHours.Size = new System.Drawing.Size(144, 23);
+            this.CalcHours.TabIndex = 19;
+            this.CalcHours.Text = "Calculate remaining hours";
+            this.CalcHours.UseVisualStyleBackColor = true;
+            this.CalcHours.Click += new System.EventHandler(this.CalcHours_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(139, 169);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(53, 13);
+            this.label1.TabIndex = 22;
+            this.label1.Text = "Job hours";
+            // 
+            // JobhoursUpDown
+            // 
+            this.JobhoursUpDown.Location = new System.Drawing.Point(139, 188);
+            this.JobhoursUpDown.Name = "JobhoursUpDown";
+            this.JobhoursUpDown.Size = new System.Drawing.Size(57, 20);
+            this.JobhoursUpDown.TabIndex = 21;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1035, 627);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.JobhoursUpDown);
+            this.Controls.Add(this.CalcHours);
             this.Controls.Add(this.Print);
             this.Controls.Add(this.CrEmployee);
             this.Controls.Add(this.CrJob);
@@ -217,6 +250,7 @@
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.JobhoursUpDown)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -239,6 +273,9 @@
         private System.Windows.Forms.Button Print;
         private System.Windows.Forms.PrintPreviewDialog printPreviewDialog1;
         private System.Drawing.Printing.PrintDocument printDocument1;
+        private System.Windows.Forms.Button CalcHours;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.NumericUpDown JobhoursUpDown;
     }
 }
 

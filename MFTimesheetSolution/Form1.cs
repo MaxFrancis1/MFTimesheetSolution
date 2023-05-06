@@ -123,14 +123,15 @@ namespace MFTimesheetSolution
 
         private void CrJob_Click(object sender, EventArgs e)
         {
-            if (comboBox1.Text == "")
+            if ((comboBox1.Text == "") || (JobhoursUpDown.Value == 0))
             {
-                MessageBox.Show("Please select a enter a name for this Job");
+                MessageBox.Show("Please select a enter a name and predicted hours for this job");
                 return;
             };
             string jobDesc = comboBox1.Text;
+            double jobHours = (double)JobhoursUpDown.Value;
 
-            JobService.CreateJob(jobDesc);
+            JobService.CreateJob(jobDesc, jobHours);
             RefreshJobs();
         }
 
@@ -167,6 +168,29 @@ namespace MFTimesheetSolution
         private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
             e.Graphics.DrawImage(bitmap, 0, 0);
+        }
+
+        private void CalcHours_Click(object sender, EventArgs e)
+        {
+            if (comboBox1.Text == "")
+            {
+                MessageBox.Show("Please select a Job");
+                return;
+            };
+
+            string jobDesc = comboBox1.Text;
+
+            double jobHours = JobService.JobHours(jobDesc);
+            double hoursSpent = TimesheetService.CalcHoursSpent(jobDesc);
+
+            if (hoursSpent > jobHours)
+            {
+                MessageBox.Show($"Exceeded predicted hours on job {jobDesc}");
+            }
+            else
+            {
+                MessageBox.Show($"{jobHours - hoursSpent} hours remaining on job {jobDesc}");
+            };
         }
     }
 }

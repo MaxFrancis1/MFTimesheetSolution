@@ -59,6 +59,18 @@ namespace MFTimesheetSolution
             }
         }
 
+        public double CalcHoursSpent (string jobDesc)
+        {
+            double hoursSpent = 0;
+            List<Timesheet> timesheet = GetAllTimesheet(jobDesc);
+
+            foreach (Timesheet data in timesheet)
+            {
+                hoursSpent = data.Mon + data.Tue + data.Wed + data.Thu + data.Fri;
+            }
+            return hoursSpent;
+        }
+
         public void UpdateTimesheet(string employee, string jobDesc, string weekEnd, double mon, double tue, double wed, double thu, double fri)
         {
             Timesheet timesheet = _Tsdata.Find(e => e.Employee == employee && e.JobDesc == jobDesc && e.WeekEnd == weekEnd);

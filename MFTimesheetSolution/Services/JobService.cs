@@ -21,11 +21,19 @@ namespace MFTimesheetSolution
             _Jobdata = _Repository.ReadXml();
         }
 
-        public void CreateJob(string jobDesc)
+        public double JobHours(string jobDesc)
+        {
+            Job jobHours = _Jobdata.Find(e => e.JobDesc == jobDesc);
+
+            return jobHours.JobHours;
+        }
+
+        public void CreateJob(string jobDesc, double jobHours)
         {
             Job job = new Job()
             {
-                JobDesc = jobDesc
+                JobDesc = jobDesc,
+                JobHours = jobHours
             };
             _Jobdata.Add(job);
             _Repository.WriteXml(_Jobdata);
